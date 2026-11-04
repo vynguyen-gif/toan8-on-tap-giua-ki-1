@@ -9,22 +9,33 @@
   --warning: #d97706;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* KaTeX custom sizing and scroll for long math equations */
+/* KaTeX custom sizing and scroll for long math equations on mobile */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.5rem 0;
   margin: 0.5rem 0 !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .katex {
-  font-size: 1.08em;
+  font-size: 1.05em;
+  max-width: 100%;
+}
+
+/* Prevent zoom on input focus in iOS */
+input[type="text"], input[type="number"], select, textarea {
+  font-size: 16px !important;
 }
 
 /* Custom question badge */
@@ -42,12 +53,17 @@ body {
 
 /* Question Option Styling */
 .option-btn {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
+  min-height: 48px; /* Touch-friendly height */
 }
 
 .option-btn:hover {
   transform: translateY(-1px);
+}
+
+.option-btn:active {
+  transform: scale(0.99);
 }
 
 .option-btn.selected {
@@ -86,9 +102,17 @@ body {
   color: #fecaca !important;
 }
 
-/* Question Grid Button in drawer */
+/* Part 2 Touch Buttons */
+.tf-btn {
+  min-height: 40px;
+  touch-action: manipulation;
+}
+
+/* Question Grid Button */
 .q-nav-btn {
   transition: all 0.15s ease;
+  min-width: 38px;
+  min-height: 38px;
 }
 
 .q-nav-btn.answered {
@@ -109,14 +133,38 @@ body {
   border-color: #dc2626;
 }
 
-.q-nav-btn.current {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -136,13 +184,9 @@ body {
   background: #475569;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
 /* Print Styles */
 @media print {
-  .no-print, header, nav, #quick-nav, #actions-panel, #mode-banner {
+  .no-print, header, nav, #quick-nav, #actions-panel, #mode-banner, #mobile-bottom-bar, #nav-drawer {
     display: none !important;
   }
   body {
