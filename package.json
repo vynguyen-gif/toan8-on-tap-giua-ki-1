@@ -1,0 +1,8 @@
+{
+  "name": "coxuanmong",
+  "version": "1.0.0",
+  "description": "Website luyen tap tuong tac De cuong Toan 8 Giua HK1 - Co Xuan Mong",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
