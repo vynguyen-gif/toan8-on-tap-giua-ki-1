@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#4f46e5">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Ôn Tập Giữa Học Kì 1 - Toán 8 (2026 - 2027) | Luyện Tập Tương Tác</title>
-  <meta name="description" content="Website luyện tập tương tác đề cương ôn tập giữa học kì 1 Toán 8 theo chương trình giáo dục phổ thông mới. Đầy đủ trắc nghiệm, đúng/sai, trả lời ngắn, tự luận và hình vẽ.">
+  <title>Ôn Tập Giữa Học Kì 1 - Toán 8 (2026 - 2027) | Luyện Tập Tương Tác & Xuất Đề Thi</title>
+  <meta name="description" content="Website luyện tập tương tác đề cương ôn tập giữa học kì 1 Toán 8 theo chương trình giáo dục phổ thông mới. Tạo 3 đề ôn tập chuẩn ma trận, xuất bản in cho Giáo viên và Học sinh.">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -58,7 +58,7 @@
               TOÁN 8 • GIỮA KÌ 1
             </h1>
             <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
-              Năm học 2026 – 2027 • Luyện tập tương tác điện thoại & máy tính
+              Năm học 2026 – 2027 • Luyện tập tương tác & 3 Đề thi chuẩn hóa
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@
 
           <!-- Desktop Progress summary -->
           <div class="hidden md:flex flex-col items-end">
-            <span id="progress-text" class="text-xs font-semibold text-slate-600 dark:text-slate-400">0/45 câu (0%)</span>
+            <span id="progress-text" class="text-xs font-semibold text-slate-600 dark:text-slate-400">0/18 câu (0%)</span>
             <div class="w-32 bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden mt-1">
               <div id="progress-bar" class="bg-indigo-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
@@ -84,6 +84,15 @@
 
         <!-- Right Action Controls -->
         <div class="flex items-center gap-1.5 sm:gap-2">
+          <!-- Export / Print Button in Header -->
+          <button id="btn-open-export" class="px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs sm:text-sm shadow-sm hover:shadow transition-all flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span class="hidden sm:inline">Xuất đề & Đáp án</span>
+            <span class="sm:hidden">Xuất đề</span>
+          </button>
+
           <!-- Dark mode toggle -->
           <button id="btn-theme-toggle" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Chuyển đổi giao diện Sáng / Tối">
             <svg class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,6 +122,37 @@
       </div>
     </div>
   </header>
+
+  <!-- EXAM SELECTOR BAR: 3 ĐỀ THI & ĐỀ CƯƠNG GỐC -->
+  <div class="bg-indigo-50/70 dark:bg-slate-900/90 border-b border-indigo-100 dark:border-slate-800 py-2 sm:py-2.5">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between gap-2 overflow-x-auto scrollbar-none">
+        
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <span class="text-xs font-bold text-slate-700 dark:text-slate-300 hidden sm:inline mr-1">
+            Chọn đề ôn tập:
+          </span>
+          <button data-exam="all" class="exam-tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white shadow-md transition-all shrink-0">
+            📚 Toàn bộ đề cương
+          </button>
+          <button data-exam="de1" class="exam-tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shrink-0 border border-slate-200 dark:border-slate-700">
+            📝 Đề số 01 (Chuẩn 10đ)
+          </button>
+          <button data-exam="de2" class="exam-tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shrink-0 border border-slate-200 dark:border-slate-700">
+            📝 Đề số 02 (Chuẩn 10đ)
+          </button>
+          <button data-exam="de3" class="exam-tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shrink-0 border border-slate-200 dark:border-slate-700">
+            📝 Đề số 03 (Chuẩn 10đ)
+          </button>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-2 text-xs font-medium text-slate-500">
+          <span>Ma trận: 12 TN (3đ) + 2 Đ/S (2đ) + 4 TLN (2đ) + 3 TL (3đ)</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- SECONDARY BAR: MODE SELECTOR & FILTER TABS -->
   <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2.5 sm:py-3 shadow-xs">
@@ -151,13 +191,6 @@
             </svg>
             <span>Làm lại</span>
           </button>
-
-          <button onclick="window.print()" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1" title="In đề thi hoặc lưu PDF">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-            </svg>
-            <span class="hidden sm:inline">In đề / PDF</span>
-          </button>
         </div>
 
       </div>
@@ -165,19 +198,19 @@
       <!-- Part Filter Tabs (Swipeable on mobile) -->
       <div class="flex items-center gap-1 overflow-x-auto pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm mt-2.5 scrollbar-none">
         <button data-tab="all" class="tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-bold bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-b-2 border-indigo-600 transition-all shrink-0">
-          Tất cả (45 câu + Tự luận)
+          Tất cả các phần
         </button>
         <button data-tab="part1" class="tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all shrink-0">
-          Phần 1: Trắc nghiệm (30 câu)
+          Phần 1: Trắc nghiệm (12 câu)
         </button>
         <button data-tab="part2" class="tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all shrink-0">
-          Phần 2: Đúng / Sai (6 câu)
+          Phần 2: Đúng / Sai (2 câu)
         </button>
         <button data-tab="part3" class="tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all shrink-0">
-          Phần 3: Trả lời ngắn (9 câu)
+          Phần 3: Trả lời ngắn (4 câu)
         </button>
         <button data-tab="part4" class="tab-btn px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all shrink-0">
-          Phần 4: Tự luận (10 bài)
+          Phần 4: Tự luận (3 bài)
         </button>
       </div>
 
@@ -200,7 +233,7 @@
             <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
               <span>🎯 Danh mục câu hỏi</span>
             </h3>
-            <span class="text-xs text-slate-500 font-medium">1 → 45</span>
+            <span class="text-xs text-slate-500 font-medium">Bảng câu</span>
           </div>
 
           <!-- Color legend -->
@@ -223,14 +256,17 @@
             </div>
           </div>
 
-          <!-- Question Grid (1 -> 45) -->
+          <!-- Question Grid -->
           <div id="quick-nav-grid" class="grid grid-cols-5 gap-2 max-h-[58vh] overflow-y-auto pr-1">
             <!-- Dynamically populated -->
           </div>
 
-          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 text-center">
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
             <button onclick="window.app.submitExam()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all">
               Chấm điểm & Xem kết quả
+            </button>
+            <button onclick="window.app.openExportModal()" class="w-full py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 font-bold text-xs border border-amber-200 dark:border-amber-800 transition-all flex items-center justify-center gap-1.5">
+              <span>🖨️ Xuất đề / In đề thi & Đáp án</span>
             </button>
           </div>
         </div>
@@ -244,7 +280,7 @@
     <!-- Progress Pill -->
     <div class="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-300">
       <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-      <span id="mobile-bottom-progress">0/45 (0%)</span>
+      <span id="mobile-bottom-progress">0/18 (0%)</span>
     </div>
 
     <!-- Center Button: Open Question Grid Drawer -->
@@ -252,7 +288,12 @@
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
       </svg>
-      <span>Bảng câu hỏi</span>
+      <span>Bảng câu</span>
+    </button>
+
+    <!-- Export Button on Mobile Bottom -->
+    <button id="btn-open-export-mobile" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1">
+      <span>🖨️ Xuất</span>
     </button>
 
     <!-- Right Button: Submit Exam -->
@@ -264,12 +305,12 @@
     </button>
   </div>
 
-  <!-- MOBILE DRAWER QUICK NAV (Slide-in bottom sheet / drawer) -->
+  <!-- MOBILE DRAWER QUICK NAV -->
   <div id="nav-drawer" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center">
     <div class="bg-white dark:bg-slate-900 w-full sm:max-w-md max-h-[85vh] sm:rounded-3xl rounded-t-3xl p-5 shadow-2xl flex flex-col animate-slideUp">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 mb-3">
         <div>
-          <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">Bảng câu hỏi (1 - 45)</h3>
+          <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">Bảng câu hỏi</h3>
           <p class="text-[11px] text-slate-500">Chạm vào số câu để chuyển nhanh đến câu hỏi</p>
         </div>
         <button id="btn-close-drawer" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
@@ -303,10 +344,86 @@
         <!-- Rendered dynamically -->
       </div>
 
-      <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+      <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
         <button onclick="window.app.submitExam(); document.getElementById('nav-drawer').classList.add('hidden');" class="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-sm shadow-md active:scale-98 transition-all">
           Nộp bài & Chấm điểm
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL XUẤT ĐỀ & ĐÁP ÁN (GIÁO VIÊN & HỌC SINH) -->
+  <div id="modal-export" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white dark:bg-slate-900 max-w-lg w-full rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-2xl animate-scaleUp">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg">🖨️</span>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Xuất Đề Thi & Đáp Án</h3>
+            <p class="text-xs text-slate-500">Tùy chọn in ấn A4 hoặc tải file Word (.doc)</p>
+          </div>
+        </div>
+        <button id="btn-close-export" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-sm">
+        <!-- Chọn Đề thi -->
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-200 mb-1.5 text-xs uppercase tracking-wider">
+            1. Chọn bộ đề muốn xuất:
+          </label>
+          <select id="export-exam-select" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-semibold focus:ring-2 focus:ring-indigo-500">
+            <option value="de1">📝 Đề số 01 (Chuẩn ma trận: 12 TN + 2 Đ/S + 4 TLN + 3 TL)</option>
+            <option value="de2">📝 Đề số 02 (Chuẩn ma trận: 12 TN + 2 Đ/S + 4 TLN + 3 TL)</option>
+            <option value="de3">📝 Đề số 03 (Chuẩn ma trận: 12 TN + 2 Đ/S + 4 TLN + 3 TL)</option>
+            <option value="all">📚 Toàn bộ Đề cương (45 câu trắc nghiệm + 10 bài tự luận)</option>
+          </select>
+        </div>
+
+        <!-- Chọn Đối tượng xuất -->
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-200 mb-1.5 text-xs uppercase tracking-wider">
+            2. Chọn phiên bản tài liệu:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 cursor-pointer hover:border-indigo-500 transition-colors">
+              <input type="radio" name="export-role" value="student" checked class="text-indigo-600 focus:ring-indigo-500">
+              <div>
+                <div class="font-bold text-slate-800 dark:text-slate-100">👨‍🎓 Bản Học Sinh</div>
+                <div class="text-[11px] text-slate-500">Đề thi không đáp án, có khung điểm & lời phê</div>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 cursor-pointer hover:border-indigo-500 transition-colors">
+              <input type="radio" name="export-role" value="teacher" class="text-indigo-600 focus:ring-indigo-500">
+              <div>
+                <div class="font-bold text-slate-800 dark:text-slate-100">👩‍🏫 Bản Giáo Viên</div>
+                <div class="text-[11px] text-slate-500">Kèm bảng đáp án, thang điểm & lời giải</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Các nút hành động xuất -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <button id="btn-export-print" class="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span>Xem trước & In ra PDF</span>
+          </button>
+
+          <button id="btn-export-word" class="py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Tải file Word (.doc)</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -319,7 +436,7 @@
           <span id="modal-score-val" class="font-black text-2xl sm:text-3xl">10.0</span>
         </div>
         <div class="text-[11px] sm:text-xs uppercase tracking-wider font-extrabold text-indigo-600 dark:text-indigo-400 mb-1">
-          Điểm số quy đổi (Thang 10) • <span id="modal-score-percent">100%</span>
+          Điểm số phần trắc nghiệm • <span id="modal-score-percent">100%</span>
         </div>
         <p id="modal-eval-text" class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100 mt-1 sm:mt-2">
           Xuất sắc! Bạn nắm rất vững kiến thức.
@@ -329,19 +446,19 @@
       <!-- Detailed Breakdown -->
       <div class="space-y-2 sm:space-y-3 bg-slate-50 dark:bg-slate-800/60 p-3.5 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm mb-5 sm:mb-6">
         <div class="flex justify-between items-center py-1 border-b border-slate-200 dark:border-slate-700">
-          <span class="text-slate-600 dark:text-slate-400">Phần 1 (Trắc nghiệm 30 câu):</span>
-          <span id="modal-p1-stat" class="font-bold text-slate-900 dark:text-white">30 / 30 câu</span>
+          <span class="text-slate-600 dark:text-slate-400">Phần 1 (Trắc nghiệm nhiều lựa chọn):</span>
+          <span id="modal-p1-stat" class="font-bold text-slate-900 dark:text-white">12 / 12 câu</span>
         </div>
         <div class="flex justify-between items-center py-1 border-b border-slate-200 dark:border-slate-700">
-          <span class="text-slate-600 dark:text-slate-400">Phần 2 (Đúng / Sai 6 câu):</span>
-          <span id="modal-p2-stat" class="font-bold text-slate-900 dark:text-white">6.0 điểm</span>
+          <span class="text-slate-600 dark:text-slate-400">Phần 2 (Trắc nghiệm Đúng / Sai):</span>
+          <span id="modal-p2-stat" class="font-bold text-slate-900 dark:text-white">2.0 điểm</span>
         </div>
         <div class="flex justify-between items-center py-1 border-b border-slate-200 dark:border-slate-700">
-          <span class="text-slate-600 dark:text-slate-400">Phần 3 (Trả lời ngắn 9 câu):</span>
-          <span id="modal-p3-stat" class="font-bold text-slate-900 dark:text-white">9 / 9 câu</span>
+          <span class="text-slate-600 dark:text-slate-400">Phần 3 (Trắc nghiệm Trả lời ngắn):</span>
+          <span id="modal-p3-stat" class="font-bold text-slate-900 dark:text-white">4 / 4 câu</span>
         </div>
         <div class="flex justify-between items-center py-1">
-          <span class="text-slate-600 dark:text-slate-400">Tổng số câu làm sai:</span>
+          <span class="text-slate-600 dark:text-slate-400">Số câu trắc nghiệm làm sai:</span>
           <span id="modal-wrong-stat" class="font-bold text-rose-600 dark:text-rose-400">0 câu</span>
         </div>
       </div>
@@ -365,7 +482,7 @@
         Đề cương Ôn tập Giữa Học Kì 1 – Môn Toán 8 • Bộ sách Giáo khoa mới (2026 – 2027)
       </p>
       <p class="mt-1">
-        Tối ưu hóa 100% cho điện thoại di động & máy tính • Học sinh luyện tập mọi lúc mọi nơi.
+        Hệ thống 3 Đề thi chuẩn ma trận • Hỗ trợ xuất file in ấn cho Giáo viên & Học sinh.
       </p>
     </div>
   </footer>
@@ -373,6 +490,8 @@
   <!-- Application scripts in order -->
   <script src="svgDiagrams.js"></script>
   <script src="questions.js"></script>
+  <script src="exams.js"></script>
+  <script src="exportUtils.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -184,9 +184,16 @@ input[type="text"], input[type="number"], select, textarea {
   background: #475569;
 }
 
+.exam-tab-btn {
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.exam-tab-btn:active {
+  transform: scale(0.98);
+}
+
 /* Print Styles */
 @media print {
-  .no-print, header, nav, #quick-nav, #actions-panel, #mode-banner, #mobile-bottom-bar, #nav-drawer {
+  .no-print, header, nav, #quick-nav, #actions-panel, #mode-banner, #mobile-bottom-bar, #nav-drawer, #modal-export, #modal-score {
     display: none !important;
   }
   body {

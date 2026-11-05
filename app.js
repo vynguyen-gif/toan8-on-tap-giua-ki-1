@@ -2,6 +2,7 @@
 class MathApp {
   constructor() {
     this.data = EXAM_DATA;
+    this.currentExamId = 'all'; // 'all' | 'de1' | 'de2' | 'de3'
     this.currentMode = 'practice'; // 'practice' | 'exam' | 'review-wrong'
     this.currentTab = 'all'; // 'all' | 'part1' | 'part2' | 'part3' | 'part4'
     this.submitted = false;
@@ -20,15 +21,76 @@ class MathApp {
     // Load persisted state from localStorage
     this.loadState();
 
-    // Prepare questions (clone for shuffle)
-    this.questions = {
-      part1: [...this.data.part1],
-      part2: [...this.data.part2],
-      part3: [...this.data.part3],
-      part4: [...this.data.part4]
-    };
+    // Prepare questions based on currentExamId
+    this.loadExamQuestions();
 
     this.init();
+  }
+
+  // Load questions for currentExamId ('all', 'de1', 'de2', 'de3')
+  loadExamQuestions() {
+    if (this.currentExamId === 'all') {
+      this.questions = {
+        part1: [...this.data.part1],
+        part2: [...this.data.part2],
+        part3: [...this.data.part3],
+        part4: [...this.data.part4]
+      };
+      this.examInfo = {
+        code: "ĐỀ CƯƠNG ÔN TẬP",
+        title: "ĐỀ CƯƠNG ÔN TẬP GIỮA HỌC KÌ 1 – TOÁN 8",
+        timeMinutes: 90
+      };
+    } else {
+      const exam = PRACTICE_EXAMS.find(e => e.id === this.currentExamId) || PRACTICE_EXAMS[0];
+      this.examInfo = exam;
+      this.questions = {
+        part1: exam.part1Ids.map(id => this.data.part1.find(q => q.id === id)).filter(Boolean),
+        part2: exam.part2Ids.map(id => this.data.part2.find(q => q.id === id)).filter(Boolean),
+        part3: exam.part3Ids.map(id => this.data.part3.find(q => q.id === id)).filter(Boolean),
+        part4: exam.part4.map(b => ({
+          number: b.num,
+          title: b.title,
+          description: b.description,
+          svgKey: b.svgKey,
+          subItems: b.subItems.map(item => ({
+            num: item.sub,
+            problem: item.problem,
+            solution: item.solution,
+            points: item.points
+          }))
+        }))
+      };
+    }
+  }
+
+  setExam(examId) {
+    this.currentExamId = examId;
+    this.submitted = false;
+    this.loadExamQuestions();
+    this.timerSeconds = (this.examInfo.timeMinutes || 90) * 60;
+    this.stopTimer();
+
+    // Update active UI tabs for exams
+    document.querySelectorAll('.exam-tab-btn').forEach(btn => {
+      if (btn.dataset.exam === examId) {
+        btn.className = 'exam-tab-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white shadow-md transition-all shrink-0';
+      } else {
+        btn.className = 'exam-tab-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shrink-0';
+      }
+    });
+
+    // Update title banner if present
+    const bannerEl = document.getElementById('current-exam-title');
+    if (bannerEl) {
+      bannerEl.textContent = this.examInfo.title;
+    }
+
+    this.render();
+    this.updateStats();
+    if (this.currentMode === 'exam') {
+      this.startTimer();
+    }
   }
 
   init() {
@@ -47,6 +109,7 @@ class MathApp {
         answers: this.answers,
         submitted: this.submitted,
         currentMode: this.currentMode,
+        currentExamId: this.currentExamId,
         wrongQuestionIds: Array.from(this.wrongQuestionIds),
         bookmarks: Array.from(this.bookmarks),
         timerSeconds: this.timerSeconds
@@ -65,6 +128,7 @@ class MathApp {
         if (state.answers) this.answers = state.answers;
         if (state.submitted !== undefined) this.submitted = state.submitted;
         if (state.currentMode) this.currentMode = state.currentMode;
+        if (state.currentExamId) this.currentExamId = state.currentExamId;
         if (state.wrongQuestionIds) this.wrongQuestionIds = new Set(state.wrongQuestionIds);
         if (state.bookmarks) this.bookmarks = new Set(state.bookmarks);
         if (state.timerSeconds) this.timerSeconds = state.timerSeconds;
@@ -131,7 +195,7 @@ class MathApp {
         if (this.timerSeconds % 10 === 0) this.saveState();
       } else {
         this.stopTimer();
-        alert('Đã hết thời gian 90 phút làm bài! Hệ thống sẽ tự động nộp bài.');
+        alert('Đã hết thời gian làm bài! Hệ thống sẽ tự động nộp bài.');
         this.submitExam();
       }
     }, 1000);
@@ -176,6 +240,14 @@ class MathApp {
 
   // Event Listeners
   bindEvents() {
+    // Exam tab buttons (Đề cương vs Đề 1, Đề 2, Đề 3)
+    document.querySelectorAll('.exam-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const examId = e.currentTarget.dataset.exam;
+        this.setExam(examId);
+      });
+    });
+
     // Mode switcher buttons
     document.querySelectorAll('.mode-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -231,6 +303,39 @@ class MathApp {
       }
     });
 
+    // Export Modal Controls
+    const exportOpenBtns = [
+      document.getElementById('btn-open-export'),
+      document.getElementById('btn-open-export-mobile')
+    ];
+    exportOpenBtns.forEach(btn => {
+      btn?.addEventListener('click', () => {
+        this.openExportModal();
+      });
+    });
+
+    document.getElementById('btn-close-export')?.addEventListener('click', () => {
+      document.getElementById('modal-export')?.classList.add('hidden');
+    });
+
+    document.getElementById('modal-export')?.addEventListener('click', (e) => {
+      if (e.target.id === 'modal-export') {
+        document.getElementById('modal-export').classList.add('hidden');
+      }
+    });
+
+    document.getElementById('btn-export-print')?.addEventListener('click', () => {
+      const examId = document.getElementById('export-exam-select')?.value || this.currentExamId;
+      const role = document.querySelector('input[name="export-role"]:checked')?.value || 'student';
+      ExportUtils.printExam(examId, role);
+    });
+
+    document.getElementById('btn-export-word')?.addEventListener('click', () => {
+      const examId = document.getElementById('export-exam-select')?.value || this.currentExamId;
+      const role = document.querySelector('input[name="export-role"]:checked')?.value || 'student';
+      ExportUtils.downloadWord(examId, role);
+    });
+
     // Dark mode toggle
     document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
@@ -243,6 +348,16 @@ class MathApp {
         (!localStorage.getItem('math8_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     }
+  }
+
+  openExportModal() {
+    const modal = document.getElementById('modal-export');
+    if (!modal) return;
+    const select = document.getElementById('export-exam-select');
+    if (select) {
+      select.value = this.currentExamId;
+    }
+    modal.classList.remove('hidden');
   }
 
   setMode(mode) {
@@ -377,15 +492,15 @@ class MathApp {
     };
 
     // Shuffle options of part 1 questions
-    this.questions.part1 = shuffleArray(this.data.part1).map(q => {
+    this.questions.part1 = shuffleArray(this.questions.part1).map(q => {
       return {
         ...q,
         options: shuffleArray(q.options)
       };
     });
 
-    this.questions.part2 = shuffleArray(this.data.part2);
-    this.questions.part3 = shuffleArray(this.data.part3);
+    this.questions.part2 = shuffleArray(this.questions.part2);
+    this.questions.part3 = shuffleArray(this.questions.part3);
 
     this.answers = { part1: {}, part2: {}, part3: {} };
     this.submitted = false;
@@ -397,12 +512,7 @@ class MathApp {
   // Reset exam
   resetExam() {
     this.clearState();
-    this.questions = {
-      part1: [...this.data.part1],
-      part2: [...this.data.part2],
-      part3: [...this.data.part3],
-      part4: [...this.data.part4]
-    };
+    this.loadExamQuestions();
     this.render();
     this.updateStats();
     if (this.currentMode === 'exam') {
@@ -468,11 +578,29 @@ class MathApp {
       }
     });
 
-    // Total score converted to 10 scale
-    const rawTotal = (p1Correct * 0.25) + p2Points + (p3Correct * 0.5);
-    const maxRaw = (30 * 0.25) + 6.0 + (9 * 0.5); // 18.0
-    const finalScore = ((rawTotal / maxRaw) * 10).toFixed(2);
-    const percentage = Math.round((rawTotal / maxRaw) * 100);
+    const isCustomExam = this.currentExamId !== 'all';
+    let rawTotal = 0;
+    let maxRaw = 0;
+    let finalScore = 0;
+    let percentage = 0;
+
+    if (isCustomExam) {
+      // Chuẩn ma trận đề 10 điểm:
+      // Phần 1: 12 câu x 0.25đ = 3.0đ
+      // Phần 2: 2 câu x 1.0đ = 2.0đ
+      // Phần 3: 4 câu x 0.5đ = 2.0đ
+      // Tổng trắc nghiệm = 7.0 điểm. Phần tự luận = 3.0 điểm (được hướng dẫn chấm)
+      rawTotal = (p1Correct * 0.25) + p2Points + (p3Correct * 0.5);
+      maxRaw = (12 * 0.25) + 2.0 + (4 * 0.5); // 7.0 điểm trắc nghiệm
+      finalScore = rawTotal.toFixed(2);
+      percentage = Math.round((rawTotal / maxRaw) * 100);
+    } else {
+      // Đề cương tổng hợp (18.0 điểm thô quy đổi thang 10)
+      rawTotal = (p1Correct * 0.25) + p2Points + (p3Correct * 0.5);
+      maxRaw = (30 * 0.25) + 6.0 + (9 * 0.5); // 18.0
+      finalScore = ((rawTotal / maxRaw) * 10).toFixed(2);
+      percentage = Math.round((rawTotal / maxRaw) * 100);
+    }
 
     this.saveState();
     this.render();
@@ -480,20 +608,21 @@ class MathApp {
 
     // Show result modal
     this.showScoreModal({
+      isCustomExam,
       finalScore,
       percentage,
       p1Correct,
-      p1Total: 30,
+      p1Total: this.questions.part1.length,
       p2Points: p2Points.toFixed(2),
       p2FullCorrectCount,
-      p2Total: 6,
+      p2Total: this.questions.part2.length,
       p3Correct,
-      p3Total: 9,
+      p3Total: this.questions.part3.length,
       wrongCount: this.wrongQuestionIds.size
     });
 
-    // Confetti celebration if >= 8.0
-    if (finalScore >= 8.0 && typeof confetti === 'function') {
+    // Confetti celebration if high score
+    if ((isCustomExam ? (finalScore >= 5.5) : (finalScore >= 8.0)) && typeof confetti === 'function') {
       confetti({
         particleCount: 120,
         spread: 80,
@@ -508,16 +637,20 @@ class MathApp {
 
     let evaluation = '';
     let evalColor = '';
-    if (stats.finalScore >= 9.0) {
+    const numScore = parseFloat(stats.finalScore);
+    const maxScore = stats.isCustomExam ? 7.0 : 10.0;
+    const ratio = numScore / maxScore;
+
+    if (ratio >= 0.9) {
       evaluation = '🌟 Xuất sắc! Bạn nắm rất vững kiến thức và hình học 8.';
       evalColor = 'text-emerald-600 dark:text-emerald-400';
-    } else if (stats.finalScore >= 8.0) {
+    } else if (ratio >= 0.8) {
       evaluation = '🎉 Rất giỏi! Cố gắng khắc phục một vài điểm nhỏ để đạt điểm tuyệt đối nhé.';
       evalColor = 'text-blue-600 dark:text-blue-400';
-    } else if (stats.finalScore >= 6.5) {
+    } else if (ratio >= 0.65) {
       evaluation = '👍 Khá tốt! Hãy bấm vào "Luyện lại câu sai" để rèn luyện thêm.';
       evalColor = 'text-indigo-600 dark:text-indigo-400';
-    } else if (stats.finalScore >= 5.0) {
+    } else if (ratio >= 0.5) {
       evaluation = '📖 Đạt trung bình. Bạn nên đọc kĩ lại lời giải các câu sai và ôn thêm hình vẽ.';
       evalColor = 'text-amber-600 dark:text-amber-400';
     } else {
@@ -525,14 +658,14 @@ class MathApp {
       evalColor = 'text-rose-600 dark:text-rose-400';
     }
 
-    document.getElementById('modal-score-val').textContent = stats.finalScore;
-    document.getElementById('modal-score-percent').textContent = `${stats.percentage}%`;
+    document.getElementById('modal-score-val').textContent = stats.isCustomExam ? `${stats.finalScore}/7.0đ` : stats.finalScore;
+    document.getElementById('modal-score-percent').textContent = `${stats.percentage}% Trắc nghiệm`;
     document.getElementById('modal-eval-text').textContent = evaluation;
     document.getElementById('modal-eval-text').className = `text-sm sm:text-base font-bold ${evalColor}`;
 
-    document.getElementById('modal-p1-stat').textContent = `${stats.p1Correct} / ${stats.p1Total} câu`;
+    document.getElementById('modal-p1-stat').textContent = `${stats.p1Correct} / ${stats.p1Total} câu (${(stats.p1Correct * 0.25).toFixed(2)}đ)`;
     document.getElementById('modal-p2-stat').textContent = `${stats.p2Points} điểm (${stats.p2FullCorrectCount}/${stats.p2Total} câu đúng hết)`;
-    document.getElementById('modal-p3-stat').textContent = `${stats.p3Correct} / ${stats.p3Total} câu`;
+    document.getElementById('modal-p3-stat').textContent = `${stats.p3Correct} / ${stats.p3Total} câu (${(stats.p3Correct * 0.5).toFixed(2)}đ)`;
     document.getElementById('modal-wrong-stat').textContent = `${stats.wrongCount} câu`;
 
     modal.classList.remove('hidden');
@@ -548,22 +681,24 @@ class MathApp {
   // Update real-time stats banner
   updateStats() {
     let answeredCount = 0;
-    const totalQuestions = 45; // 30 + 6 + 9
+    const totalQuestions = this.questions.part1.length + this.questions.part2.length + this.questions.part3.length;
 
     // Part 1
-    answeredCount += Object.keys(this.answers.part1).length;
+    this.questions.part1.forEach(q => {
+      if (this.answers.part1[q.id]) answeredCount++;
+    });
 
     // Part 2
-    Object.keys(this.answers.part2).forEach(qid => {
-      if (Object.keys(this.answers.part2[qid]).length > 0) answeredCount++;
+    this.questions.part2.forEach(q => {
+      if (this.answers.part2[q.id] && Object.keys(this.answers.part2[q.id]).length > 0) answeredCount++;
     });
 
     // Part 3
-    Object.keys(this.answers.part3).forEach(qid => {
-      if (this.answers.part3[qid] && this.answers.part3[qid].trim() !== '') answeredCount++;
+    this.questions.part3.forEach(q => {
+      if (this.answers.part3[q.id] && this.answers.part3[q.id].trim() !== '') answeredCount++;
     });
 
-    const percent = Math.round((answeredCount / totalQuestions) * 100);
+    const percent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
     const progressEl = document.getElementById('progress-bar');
     if (progressEl) progressEl.style.width = `${percent}%`;
 
@@ -618,7 +753,7 @@ class MathApp {
               </span>
             </div>
             <div class="space-y-5 sm:space-y-6" id="part1-list">
-              ${p1List.map(q => this.getPart1HTML(q)).join('')}
+              ${p1List.map((q, idx) => this.getPart1HTML(q, idx + 1)).join('')}
             </div>
           </div>
         `;
@@ -641,7 +776,7 @@ class MathApp {
               </span>
             </div>
             <div class="space-y-5 sm:space-y-6" id="part2-list">
-              ${p2List.map(q => this.getPart2HTML(q)).join('')}
+              ${p2List.map((q, idx) => this.getPart2HTML(q, idx + 1)).join('')}
             </div>
           </div>
         `;
@@ -664,7 +799,7 @@ class MathApp {
               </span>
             </div>
             <div class="space-y-5 sm:space-y-6" id="part3-list">
-              ${p3List.map(q => this.getPart3HTML(q)).join('')}
+              ${p3List.map((q, idx) => this.getPart3HTML(q, idx + 1)).join('')}
             </div>
           </div>
         `;
@@ -679,14 +814,14 @@ class MathApp {
             <div class="flex items-center justify-between border-b-2 border-purple-200 dark:border-purple-800 pb-3 mb-5">
               <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center text-xs sm:text-sm font-extrabold shadow-sm shrink-0">IV</span>
-                <span>PHẦN 4: TỰ LUẬN (10 BÀI TOÁN - LỜI GIẢI CHI TIẾT)</span>
+                <span>PHẦN 4: TỰ LUẬN (${this.questions.part4.length} BÀI TOÁN - LỜI GIẢI CHI TIẾT)</span>
               </h2>
               <span class="text-xs px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 font-semibold shrink-0">
-                10 bài
+                ${this.questions.part4.length} bài
               </span>
             </div>
             <div class="space-y-6 sm:space-y-8" id="part4-list">
-              ${this.questions.part4.map(b => this.getPart4HTML(b)).join('')}
+              ${this.questions.part4.map((b, idx) => this.getPart4HTML(b, idx + 1)).join('')}
             </div>
           </div>
         `;
@@ -724,11 +859,12 @@ class MathApp {
   }
 
   // HTML Generators
-  getPart1HTML(q) {
+  getPart1HTML(q, displayIndex = null) {
     const userSelected = this.answers.part1[q.id];
     const isAnswered = !!userSelected;
     const showExplanation = (this.currentMode === 'practice' && isAnswered) || this.submitted;
     const isBookmark = this.bookmarks.has(q.id);
+    const labelNum = displayIndex !== null ? displayIndex : q.id;
 
     const svgContent = q.svgKey && SVG_DIAGRAMS[q.svgKey] ? SVG_DIAGRAMS[q.svgKey] : '';
 
@@ -738,7 +874,7 @@ class MathApp {
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 font-bold text-xs sm:text-sm border border-indigo-200 dark:border-indigo-800">
-              ${q.id}
+              ${labelNum}
             </span>
             <span class="badge-topic text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 sm:py-1 rounded-md">
               ${q.topic}
@@ -753,7 +889,7 @@ class MathApp {
 
         <!-- Question content -->
         <div class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-4">
-          <strong>Câu ${q.id}:</strong> ${q.content}
+          <strong>Câu ${labelNum}:</strong> ${q.content}
         </div>
 
         <!-- SVG Diagram if present -->
@@ -810,17 +946,19 @@ class MathApp {
     if (!q) return;
     const el = document.getElementById(`q-card-${qid}`);
     if (el) {
-      el.outerHTML = this.getPart1HTML(q);
+      const idx = this.questions.part1.indexOf(q) + 1;
+      el.outerHTML = this.getPart1HTML(q, idx);
       this.renderMath();
     }
   }
 
   // Part 2: Responsive Card Layout optimized for both Desktop and Mobile Phones
-  getPart2HTML(q) {
+  getPart2HTML(q, displayIndex = null) {
     const userAns = this.answers.part2[q.id] || {};
     const showExplanation = (this.currentMode === 'practice' && Object.keys(userAns).length > 0) || this.submitted;
     const svgContent = q.svgKey && SVG_DIAGRAMS[q.svgKey] ? SVG_DIAGRAMS[q.svgKey] : '';
     const isBookmark = this.bookmarks.has(q.id);
+    const labelNum = displayIndex !== null ? displayIndex : q.id;
 
     return `
       <div id="q-card-${q.id}" class="card-question bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs hover:shadow-md transition-shadow">
@@ -828,7 +966,7 @@ class MathApp {
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold text-xs sm:text-sm border border-emerald-200 dark:border-emerald-800">
-              ${q.id}
+              ${labelNum}
             </span>
             <span class="badge-topic text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 sm:py-1 rounded-md text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40">
               ${q.topic}
@@ -843,7 +981,7 @@ class MathApp {
 
         <!-- Question content -->
         <div class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-4">
-          <strong>Câu ${q.id}:</strong> ${q.content}
+          <strong>Câu ${labelNum}:</strong> ${q.content}
         </div>
 
         <!-- SVG Diagram if present -->
@@ -931,16 +1069,18 @@ class MathApp {
     if (!q) return;
     const el = document.getElementById(`q-card-${qid}`);
     if (el) {
-      el.outerHTML = this.getPart2HTML(q);
+      const idx = this.questions.part2.indexOf(q) + 1;
+      el.outerHTML = this.getPart2HTML(q, idx);
       this.renderMath();
     }
   }
 
-  getPart3HTML(q, forceShow = false) {
+  getPart3HTML(q, displayIndex = null, forceShow = false) {
     const userVal = this.answers.part3[q.id] || '';
     const isAnswered = userVal.trim() !== '';
     const showExplanation = forceShow || (this.currentMode === 'practice' && isAnswered) || this.submitted;
     const isBookmark = this.bookmarks.has(q.id);
+    const labelNum = displayIndex !== null ? displayIndex : q.id;
 
     const normUserVal = userVal.toLowerCase().replace(/\s+/g, '');
     const isCorrect = isAnswered && q.validAnswers.some(ans => ans.toLowerCase().replace(/\s+/g, '') === normUserVal);
@@ -951,7 +1091,7 @@ class MathApp {
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <span class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 font-bold text-xs sm:text-sm border border-amber-200 dark:border-amber-800">
-              ${q.id}
+              ${labelNum}
             </span>
             <span class="badge-topic text-[11px] sm:text-xs font-semibold px-2.5 py-0.5 sm:py-1 rounded-md text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40">
               ${q.topic}
@@ -966,7 +1106,7 @@ class MathApp {
 
         <!-- Question content -->
         <div class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-4">
-          <strong>Câu ${q.id}:</strong> ${q.content}
+          <strong>Câu ${labelNum}:</strong> ${q.content}
         </div>
 
         <!-- Short Answer Input Box -->
@@ -1019,20 +1159,22 @@ class MathApp {
     if (!q) return;
     const el = document.getElementById(`q-card-${qid}`);
     if (el) {
-      el.outerHTML = this.getPart3HTML(q, forceShow);
+      const idx = this.questions.part3.indexOf(q) + 1;
+      el.outerHTML = this.getPart3HTML(q, idx, forceShow);
       this.renderMath();
     }
   }
 
-  getPart4HTML(b) {
+  getPart4HTML(b, displayIndex = null) {
     const svgContent = b.svgKey && SVG_DIAGRAMS[b.svgKey] ? SVG_DIAGRAMS[b.svgKey] : '';
+    const labelTitle = b.number || `Bài ${displayIndex}`;
 
     return `
       <div class="card-question bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-xs hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-1 rounded-lg bg-purple-600 text-white font-extrabold text-xs sm:text-sm shadow-sm shrink-0">
-              ${b.number}
+              ${labelTitle}
             </span>
             <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-100">
               ${b.title}
@@ -1057,6 +1199,7 @@ class MathApp {
                   ${item.num}
                 </span>
                 <span class="leading-relaxed flex-grow">${item.problem}</span>
+                ${item.points ? `<span class="text-xs text-purple-600 font-bold shrink-0 bg-purple-50 dark:bg-purple-950/40 px-2 py-0.5 rounded">${item.points}</span>` : ''}
               </div>
               
               <!-- Toggle solution -->
@@ -1065,7 +1208,7 @@ class MathApp {
                   <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
-                  <span>Xem lời giải chi tiết</span>
+                  <span>Xem hướng dẫn chấm / Lời giải</span>
                 </summary>
                 <div class="mt-2.5 p-3.5 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                   ${item.solution}
@@ -1078,7 +1221,7 @@ class MathApp {
     `;
   }
 
-  // Quick navigation matrix renderer (1 -> 45) for both Desktop and Mobile!
+  // Quick navigation matrix renderer for both Desktop and Mobile!
   renderQuickNav() {
     const desktopGrid = document.getElementById('quick-nav-grid');
     const mobileGrid = document.getElementById('quick-nav-grid-mobile');
@@ -1086,15 +1229,14 @@ class MathApp {
 
     let html = '';
 
-    // Questions 1 to 30 (Part 1)
-    for (let i = 1; i <= 30; i++) {
-      const isAns = !!this.answers.part1[i];
+    // Part 1
+    this.questions.part1.forEach((q, idx) => {
+      const isAns = !!this.answers.part1[q.id];
       let colorClass = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700';
 
       if (this.submitted || this.currentMode === 'practice') {
         if (isAns) {
-          const q = this.questions.part1.find(item => item.id === i);
-          if (q && this.answers.part1[i] === q.correct) {
+          if (this.answers.part1[q.id] === q.correct) {
             colorClass = 'bg-emerald-600 text-white border-emerald-600 shadow-sm';
           } else {
             colorClass = 'bg-rose-500 text-white border-rose-500 shadow-sm';
@@ -1105,23 +1247,22 @@ class MathApp {
       }
 
       html += `
-        <button onclick="window.app.scrollToQuestion(${i})" 
+        <button onclick="window.app.scrollToQuestion(${q.id}, 'part1')" 
                 class="q-nav-btn rounded-lg text-xs font-bold border flex items-center justify-center transition-all ${colorClass}">
-          ${i}
+          ${idx + 1}
         </button>
       `;
-    }
+    });
 
-    // Questions 31 to 36 (Part 2)
-    for (let i = 31; i <= 36; i++) {
-      const qAns = this.answers.part2[i] || {};
+    // Part 2
+    this.questions.part2.forEach((q, idx) => {
+      const qAns = this.answers.part2[q.id] || {};
       const isAns = Object.keys(qAns).length > 0;
       let colorClass = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700';
 
       if (this.submitted || this.currentMode === 'practice') {
         if (isAns) {
-          const q = this.questions.part2.find(item => item.id === i);
-          let allCorrect = q && q.items.every(item => qAns[item.key] === item.correct);
+          let allCorrect = q.items.every(item => qAns[item.key] === item.correct);
           if (allCorrect) {
             colorClass = 'bg-emerald-600 text-white border-emerald-600 shadow-sm';
           } else {
@@ -1133,23 +1274,22 @@ class MathApp {
       }
 
       html += `
-        <button onclick="window.app.scrollToQuestion(${i})" 
+        <button onclick="window.app.scrollToQuestion(${q.id}, 'part2')" 
                 class="q-nav-btn rounded-lg text-xs font-bold border flex items-center justify-center transition-all ${colorClass}">
-          ${i}
+          P2.${idx + 1}
         </button>
       `;
-    }
+    });
 
-    // Questions 37 to 45 (Part 3)
-    for (let i = 37; i <= 45; i++) {
-      const isAns = !!(this.answers.part3[i] && this.answers.part3[i].trim() !== '');
+    // Part 3
+    this.questions.part3.forEach((q, idx) => {
+      const isAns = !!(this.answers.part3[q.id] && this.answers.part3[q.id].trim() !== '');
       let colorClass = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700';
 
       if (this.submitted || this.currentMode === 'practice') {
         if (isAns) {
-          const q = this.questions.part3.find(item => item.id === i);
-          const norm = (this.answers.part3[i] || '').toLowerCase().replace(/\s+/g, '');
-          const isCorrect = q && q.validAnswers.some(ans => ans.toLowerCase().replace(/\s+/g, '') === norm);
+          const norm = (this.answers.part3[q.id] || '').toLowerCase().replace(/\s+/g, '');
+          const isCorrect = q.validAnswers.some(ans => ans.toLowerCase().replace(/\s+/g, '') === norm);
           if (isCorrect) {
             colorClass = 'bg-emerald-600 text-white border-emerald-600 shadow-sm';
           } else {
@@ -1161,22 +1301,22 @@ class MathApp {
       }
 
       html += `
-        <button onclick="window.app.scrollToQuestion(${i})" 
+        <button onclick="window.app.scrollToQuestion(${q.id}, 'part3')" 
                 class="q-nav-btn rounded-lg text-xs font-bold border flex items-center justify-center transition-all ${colorClass}">
-          ${i}
+          P3.${idx + 1}
         </button>
       `;
-    }
+    });
 
     if (desktopGrid) desktopGrid.innerHTML = html;
     if (mobileGrid) mobileGrid.innerHTML = html;
   }
 
-  scrollToQuestion(qid) {
+  scrollToQuestion(qid, partHint = 'all') {
     if (this.currentTab !== 'all') {
-      if (qid <= 30 && this.currentTab !== 'part1') this.setTab('part1');
-      else if (qid >= 31 && qid <= 36 && this.currentTab !== 'part2') this.setTab('part2');
-      else if (qid >= 37 && qid <= 45 && this.currentTab !== 'part3') this.setTab('part3');
+      if (partHint && this.currentTab !== partHint) {
+        this.setTab(partHint);
+      }
     }
 
     // Hide mobile drawer

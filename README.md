@@ -1,36 +1,32 @@
-# Ứng Dụng Luyện Tập Tương Tác: Đề Cương Ôn Tập Giữa Học Kì 1 – Toán 8 (2026 – 2027)
+# Ứng Dụng Luyện Tập Tương Tác: Đề Cương & 3 Đề Ôn Tập Giữa Học Kì 1 – Toán 8 (2026 – 2027)
 
 Website học tập và luyện thi tương tác dành cho học sinh lớp 8 ôn thi giữa học kì 1 theo Chương trình Giáo dục Phổ thông mới.
 
 ## ✨ Tính Năng Nổi Bật
 
-1. **Đầy đủ 100% câu hỏi theo đề cương gốc:**
-   - **Phần 1: Trắc nghiệm 4 lựa chọn (30 câu):** Đầy đủ các chủ đề Đơn thức, Đa thức, Hằng đẳng thức, Tứ giác, Hình thang cân, Hình bình hành, Hình chữ nhật, Hình thoi, Hình vuông.
-   - **Phần 2: Trắc nghiệm Đúng / Sai (6 câu - 24 ý):** Chuẩn cấu trúc đề thi mới của Bộ GD&ĐT, chấm điểm theo barem từng ý.
-   - **Phần 3: Trắc nghiệm Trả lời ngắn (9 câu):** Học sinh tự tính toán và nhập đáp án, hệ thống tự động chuẩn hóa và chấm điểm thông minh.
-   - **Phần 4: Tự luận (10 bài toán lớn):** Bao gồm 15 câu rút gọn đa thức, 4 câu khai triển hằng đẳng thức, tìm x, bài toán thực tế diện tích mảnh đất chữ L và khu vườn trồng rau, các bài hình học tổng hợp (Bài 6, 7, 8, 9) và chứng minh hằng đẳng thức nâng cao (Bài 10).
-2. **Hình vẽ minh họa trực quan bằng chuẩn Vector SVG:**
-   - Tất cả câu hình học (Câu 21, 23, 24, 26, 27, 28, 34, 35, 36) và các bài tự luận thực tế (Bài 4, 5, 6, 7, 8, 9) đều có hình vẽ SVG sắc nét, có kí hiệu góc vuông, vạch bằng nhau, nhãn đỉnh rõ ràng.
-3. **Chế độ Luyện thi đa dạng:**
-   - 💡 **Luyện tập tự do:** Hiển thị phản hồi và lời giải chi tiết ngay sau mỗi câu làm.
-   - ⏱️ **Thi thử bấm giờ:** Đồng hồ đếm ngược 90 phút, bảo mật đáp án cho đến khi nộp bài.
-   - 🔁 **Luyện lại câu sai:** Tự động lọc ra những câu học sinh đã làm sai để rèn luyện nhiều lần cho đến khi đạt điểm tối đa.
-   - 🎲 **Trộn đề:** Xáo trộn ngẫu nhiên thứ tự câu hỏi và các phương án A, B, C, D để tránh học vẹt.
-4. **Hiển thị công thức toán KaTeX:**
-   - Hiển thị công thức đại số, phân thức, số mũ, căn bậc hai, kí hiệu góc toán học chuẩn xác, tốc độ cao.
-5. **Giao diện hiện đại & Thân thiện:**
-   - Hỗ trợ chế độ Sáng / Tối (Light / Dark mode).
-   - Tối ưu 100% cho điện thoại di động, máy tính bảng và máy tính.
-   - Hỗ trợ In đề thi hoặc xuất ra file PDF làm bài tập trên giấy.
+### 1. 📝 Hệ Thống 3 Đề Thi Ôn Tập Chuẩn Ma Trận (Thang Điểm 10)
+Từ kho câu hỏi đề cương gốc, hệ thống đã chuẩn hóa và tạo sẵn **3 Đề thi ôn tập** theo cấu trúc mới nhất của Bộ GD&ĐT:
+- **Phần 1: Trắc nghiệm 4 lựa chọn (12 câu – 3,0 điểm)**: Đầy đủ các chuyên đề Đơn thức, Đa thức, Hằng đẳng thức, Tứ giác và các hình đặc biệt (có hình vẽ minh họa SVG).
+- **Phần 2: Trắc nghiệm Đúng / Sai (2 câu – 2,0 điểm)**: Mỗi câu 4 ý a, b, c, d (Đúng 1 ý: 0.1đ; 2 ý: 0.25đ; 3 ý: 0.5đ; 4 ý: 1.0đ).
+- **Phần 3: Trắc nghiệm Trả lời ngắn (4 câu – 2,0 điểm)**: Mỗi câu 0.5 điểm, học sinh tự giải và điền đáp số.
+- **Phần 4: Tự luận (3 bài toán – 3,0 điểm)**: Gồm 1 bài đại số (1.0đ), 1 bài toán thực tế diện tích (1.0đ), 1 bài toán hình học chứng minh tổng hợp (1.0đ) có hình vẽ SVG và lời giải chi tiết.
 
-## 🚀 Hướng Dẫn Chạy Cục Bộ (Local)
+### 2. 🖨️ Xuất File Cho Giáo Viên & Học Sinh
+- 👨‍🎓 **Bản Học Sinh (Đề thi làm bài)**:
+  - Khung tiêu đề trường lớp, thông tin thí sinh, khung Điểm và Lời phê của thầy cô giáo.
+  - Bảng điền đáp án trắc nghiệm chuẩn chỉnh.
+  - Chỗ trống và dòng kẻ chấm để học sinh nháp và trình bày bài làm.
+  - Không chứa đáp án.
+- 👩‍🏫 **Bản Giáo Viên (Kèm Đáp án & Biểu điểm chi tiết)**:
+  - Bảng đáp án trắc nghiệm Phần 1, Phần 2, Phần 3.
+  - Hướng dẫn chấm tự luận Phần 4 từng bước kèm thang điểm chi tiết (0.25đ, 0.5đ) giúp giáo viên chấm bài nhanh chóng và chính xác.
+- 📥 **Tùy chọn xuất file:**
+  - **In trực tiếp / Lưu file PDF**: Tối ưu hóa chuẩn khổ giấy A4, ngắt trang hợp lý, công thức toán KaTeX sắc nét.
+  - **Tải file Word (.doc)**: Tương thích 100% với Microsoft Word, font Times New Roman, dễ dàng chỉnh sửa tên trường, lớp, năm học.
 
-Mở trực tiếp file `index.html` bằng bất kì trình duyệt web nào (Chrome, Edge, Firefox, Safari) hoặc chạy local server:
-
-```bash
-npx serve .
-```
-
-## 🌐 Triển khai lên GitHub & Vercel
-
-Dự án là Single Page Application hoàn toàn tĩnh, không phụ thuộc backend nên có thể triển khai tức thì lên GitHub Pages hoặc Vercel với 0-config.
+### 3. 💡 Chế Độ Luyện Thi & Học Tập Đa Dạng
+- 💡 **Luyện tập tự do**: Làm câu nào biết ngay đáp án và hướng dẫn giải câu đó.
+- ⏱️ **Thi thử bấm giờ 90 phút**: Đếm ngược thời gian, chấm điểm chuẩn 10 điểm, xếp loại học lực và hiệu ứng chúc mừng.
+- 🔁 **Luyện lại câu sai**: Tự động lọc các câu học sinh từng làm sai để rèn luyện nhiều lần.
+- 🎲 **Trộn đề ngẫu nhiên**: Xáo trộn vị trí câu hỏi và phương án A, B, C, D để tránh học vẹt.
+- 📱 **Tối ưu hóa 100% Mobile & Desktop**: Sử dụng mượt mà trên điện thoại, máy tính bảng và máy tính.
