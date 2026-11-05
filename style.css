@@ -193,11 +193,33 @@ input[type="text"], input[type="number"], select, textarea {
 
 /* Print Styles */
 @media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-preview-content, #print-preview-content * {
+    visibility: visible;
+  }
+  #print-preview-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
   .no-print, header, nav, #quick-nav, #actions-panel, #mode-banner, #mobile-bottom-bar, #nav-drawer, #modal-export, #modal-score {
     display: none !important;
   }
   body {
     background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .print-document {
+    font-family: 'Times New Roman', Times, serif !important;
     color: #000000 !important;
   }
   .card-question {
