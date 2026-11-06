@@ -45,9 +45,9 @@ class MathApp {
       const exam = PRACTICE_EXAMS.find(e => e.id === this.currentExamId) || PRACTICE_EXAMS[0];
       this.examInfo = exam;
       this.questions = {
-        part1: exam.part1Ids.map(id => this.data.part1.find(q => q.id === id)).filter(Boolean),
-        part2: exam.part2Ids.map(id => this.data.part2.find(q => q.id === id)).filter(Boolean),
-        part3: exam.part3Ids.map(id => this.data.part3.find(q => q.id === id)).filter(Boolean),
+        part1: exam.part1 ? exam.part1 : exam.part1Ids.map(id => this.data.part1.find(q => q.id === id)).filter(Boolean),
+        part2: exam.part2 ? exam.part2 : exam.part2Ids.map(id => this.data.part2.find(q => q.id === id)).filter(Boolean),
+        part3: exam.part3 ? exam.part3 : exam.part3Ids.map(id => this.data.part3.find(q => q.id === id)).filter(Boolean),
         part4: exam.part4.map(b => ({
           number: b.num,
           title: b.title,

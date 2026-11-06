@@ -94,9 +94,9 @@ const ExportUtils = {
     }
 
     const exam = PRACTICE_EXAMS.find(e => e.id === examId) || PRACTICE_EXAMS[0];
-    const part1 = exam.part1Ids.map(id => EXAM_DATA.part1.find(q => q.id === id)).filter(Boolean);
-    const part2 = exam.part2Ids.map(id => EXAM_DATA.part2.find(q => q.id === id)).filter(Boolean);
-    const part3 = exam.part3Ids.map(id => EXAM_DATA.part3.find(q => q.id === id)).filter(Boolean);
+    const part1 = exam.part1 ? exam.part1 : (exam.part1Ids ? exam.part1Ids.map(id => EXAM_DATA.part1.find(q => q.id === id)).filter(Boolean) : []);
+    const part2 = exam.part2 ? exam.part2 : (exam.part2Ids ? exam.part2Ids.map(id => EXAM_DATA.part2.find(q => q.id === id)).filter(Boolean) : []);
+    const part3 = exam.part3 ? exam.part3 : (exam.part3Ids ? exam.part3Ids.map(id => EXAM_DATA.part3.find(q => q.id === id)).filter(Boolean) : []);
 
     return {
       isAll: false,
@@ -127,7 +127,7 @@ const ExportUtils = {
             <td style="width:45%; text-align:center; vertical-align:top; border:none; padding:0;">
               <div style="font-size:12pt; text-transform:uppercase;">PHÒNG GD&ĐT ...................................</div>
               <div style="font-weight:bold; font-size:13pt; text-transform:uppercase;">TRƯỜNG THCS ...................................</div>
-              <div style="font-size:11pt; margin-top:2px;">Năm học: 2026 – 2027</div>
+              <div style="font-size:11pt; margin-top:2px;">Năm học: 2026 – 2027 • GV: <strong>Cô Xuân Mộng</strong></div>
             </td>
             <td style="width:55%; text-align:center; vertical-align:top; border:none; padding:0;">
               <div style="font-weight:bold; font-size:14pt; text-transform:uppercase;">ĐỀ KIỂM TRA GIỮA HỌC KÌ 1</div>
@@ -314,7 +314,10 @@ const ExportUtils = {
           <div style="font-weight:bold; font-size:12.5pt; color:#b91c1c; margin-top:2px;">
             ${examData.title}
           </div>
-          <div style="font-size:11pt; font-style:italic; color:#475569; margin-top:2px;">
+          <div style="font-size:11pt; font-weight:600; color:#4338ca; margin-top:2px;">
+            Giáo viên biên soạn: Cô Xuân Mộng • Năm học: 2026 – 2027
+          </div>
+          <div style="font-size:10.5pt; font-style:italic; color:#475569; margin-top:1px;">
             (Thang điểm 10,0 • Chuẩn ma trận cấu trúc đề thi mới)
           </div>
         </div>

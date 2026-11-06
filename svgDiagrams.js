@@ -518,5 +518,321 @@ const SVG_DIAGRAMS = {
       <text x="105" y="160" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">H</text>
       <text x="215" y="65" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">K</text>
     </svg>
+  `,
+
+  // ==================== HÌNH VẼ CHO ĐỀ SỐ 04 ====================
+  // Đề 4 - Câu 12: Tứ giác MNPQ
+  cau12_de4: `
+    <svg viewBox="0 0 320 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Tứ giác MNPQ -->
+      <polygon points="50,150 110,40 270,70 230,180" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5" stroke-linejoin="round"/>
+      <line x1="50" y1="150" x2="270" y2="70" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="110" y1="40" x2="230" y2="180" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <circle cx="50" cy="150" r="4" fill="#4338CA"/>
+      <circle cx="110" cy="40" r="4" fill="#4338CA"/>
+      <circle cx="270" cy="70" r="4" fill="#4338CA"/>
+      <circle cx="230" cy="180" r="4" fill="#4338CA"/>
+      <text x="32" y="160" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">M</text>
+      <text x="105" y="28" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">N</text>
+      <text x="280" y="75" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">P</text>
+      <text x="235" y="202" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">Q</text>
+    </svg>
+  `,
+
+  // Đề 4 - Câu 14: Góc xOy, phân giác Oz, điểm P, PE vuông Ox tại E, PF vuông Oy tại F
+  cau14_de4: `
+    <svg viewBox="0 0 320 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Đỉnh O tại (40, 180) -->
+      <!-- Tia Ox ngang: (40, 180) -> (280, 180) -->
+      <line x1="40" y1="180" x2="280" y2="180" stroke="#334155" stroke-width="2"/>
+      <text x="285" y="185" font-family="sans-serif" font-weight="bold" font-size="14" fill="#334155">x</text>
+      <!-- Tia Oy hợp góc 60 độ: dy = -sin(60)*220 = -190, dx = 110 -->
+      <line x1="40" y1="180" x2="160" y2="30" stroke="#334155" stroke-width="2"/>
+      <text x="165" y="30" font-family="sans-serif" font-weight="bold" font-size="14" fill="#334155">y</text>
+      <!-- Tia Oz phân giác 30 độ: O(40,180) qua P(200, 88) -->
+      <line x1="40" y1="180" x2="270" y2="47" stroke="#EA580C" stroke-width="2" stroke-dasharray="6,4"/>
+      <text x="275" y="45" font-family="sans-serif" font-weight="bold" font-size="14" fill="#EA580C">z</text>
+      <!-- Điểm P(200, 88) -->
+      <!-- PE vuông Ox tại E: E(200, 180) -->
+      <line x1="200" y1="88" x2="200" y2="180" stroke="#4F46E5" stroke-width="2"/>
+      <!-- PF vuông Oy tại F: F(110, 93) -->
+      <line x1="200" y1="88" x2="110" y2="93" stroke="#4F46E5" stroke-width="2"/>
+      <polyline points="190,180 190,170 200,170" fill="none" stroke="#4F46E5" stroke-width="1.5"/>
+      <circle cx="40" cy="180" r="4" fill="#1E293B"/>
+      <circle cx="200" cy="88" r="4" fill="#EA580C"/>
+      <circle cx="200" cy="180" r="4" fill="#4F46E5"/>
+      <circle cx="110" cy="93" r="4" fill="#4F46E5"/>
+      <text x="25" y="195" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">O</text>
+      <text x="205" y="80" font-family="sans-serif" font-weight="bold" font-size="15" fill="#EA580C">P</text>
+      <text x="200" y="200" font-family="sans-serif" font-weight="bold" font-size="15" fill="#4F46E5">E</text>
+      <text x="95" y="90" font-family="sans-serif" font-weight="bold" font-size="15" fill="#4F46E5">F</text>
+    </svg>
+  `,
+
+  // Đề 4 - Bài 2: Mảnh đất chữ L (3x + 4) và (y + 5), kho x * y
+  bai4_de4: `
+    <svg viewBox="0 0 340 230" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="340" height="230" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Toàn bộ khu đất (3x+4) x (y+5): A(40,30), B(300,30), C(300,180), D(40,180) -->
+      <!-- Phần chữ L màu xanh lá -->
+      <path d="M 40,30 L 210,30 L 210,110 L 300,110 L 300,180 L 40,180 Z" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+      <!-- Phần nhà kho: (210,30) đến (300,110) -->
+      <rect x="210" y="30" width="90" height="80" fill="#FEE2E2" stroke="#DC2626" stroke-width="2" stroke-dasharray="4,4"/>
+      <text x="255" y="75" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626" text-anchor="middle">Kho x · y</text>
+      <text x="120" y="115" font-family="sans-serif" font-weight="bold" font-size="15" fill="#15803D" text-anchor="middle">Phần đất chữ L</text>
+      <!-- Kích thước -->
+      <line x1="40" y1="200" x2="300" y2="200" stroke="#475569" stroke-width="1.5"/>
+      <text x="170" y="218" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" text-anchor="middle">3x + 4 (m)</text>
+      <line x1="20" y1="30" x2="20" y2="180" stroke="#475569" stroke-width="1.5"/>
+      <text x="14" y="110" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" text-anchor="middle" transform="rotate(-90 14,110)">y + 5 (m)</text>
+    </svg>
+  `,
+
+  // Đề 4 - Bài 3: Tam giác DEF vuông tại D, đường cao DH, P trên DE, Q trên DF
+  bai6_de4: `
+    <svg viewBox="0 0 340 230" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="340" height="230" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Tam giác DEF vuông tại D: D(50,170), E(50,50), F(280,170) -->
+      <polygon points="50,170 50,50 280,170" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="50" y="155" width="15" height="15" fill="none" stroke="#2563EB" stroke-width="1.5"/>
+      <!-- Đường cao DH: DH vuông EF -->
+      <line x1="50" y1="170" x2="100" y2="76" stroke="#DC2626" stroke-width="2"/>
+      <!-- HP vuông DE tại P: P=(50, 76) -->
+      <line x1="100" y1="76" x2="50" y2="76" stroke="#16A34A" stroke-width="2"/>
+      <!-- HQ vuông DF tại Q: Q=(100, 170) -->
+      <line x1="100" y1="76" x2="100" y2="170" stroke="#16A34A" stroke-width="2"/>
+      <line x1="50" y1="76" x2="100" y2="170" stroke="#9333EA" stroke-width="2" stroke-dasharray="4,4"/>
+      <circle cx="50" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="50" cy="50" r="4" fill="#1E293B"/>
+      <circle cx="280" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="100" cy="76" r="4" fill="#DC2626"/>
+      <circle cx="50" cy="76" r="4" fill="#16A34A"/>
+      <circle cx="100" cy="170" r="4" fill="#16A34A"/>
+      <text x="32" y="185" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">D</text>
+      <text x="35" y="45" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">E</text>
+      <text x="290" y="175" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">F</text>
+      <text x="105" y="70" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">H</text>
+      <text x="32" y="80" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">P</text>
+      <text x="95" y="190" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">Q</text>
+    </svg>
+  `,
+
+  // ==================== HÌNH VẼ CHO ĐỀ SỐ 05 ====================
+  // Đề 5 - Câu 11: Tứ giác ABCD có AD = BC (đánh dấu bằng nhau)
+  cau11_de5: `
+    <svg viewBox="0 0 320 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Tứ giác ABCD: A(40,80), B(150,30), C(280,140), D(170,190) -->
+      <polygon points="40,80 150,30 280,140 170,190" fill="#F0FDF4" stroke="#16A34A" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- Vạch bằng nhau trên AD và BC -->
+      <g stroke="#15803D" stroke-width="2">
+        <line x1="100" y1="130" x2="108" y2="142"/>
+        <line x1="104" y1="128" x2="112" y2="140"/>
+      </g>
+      <g stroke="#15803D" stroke-width="2">
+        <line x1="210" y1="80" x2="218" y2="92"/>
+        <line x1="214" y1="78" x2="222" y2="90"/>
+      </g>
+      <circle cx="40" cy="80" r="4" fill="#15803D"/>
+      <circle cx="150" cy="30" r="4" fill="#15803D"/>
+      <circle cx="280" cy="140" r="4" fill="#15803D"/>
+      <circle cx="170" cy="190" r="4" fill="#15803D"/>
+      <text x="22" y="85" font-family="sans-serif" font-weight="bold" font-size="16" fill="#1E293B">A</text>
+      <text x="145" y="22" font-family="sans-serif" font-weight="bold" font-size="16" fill="#1E293B">B</text>
+      <text x="290" y="148" font-family="sans-serif" font-weight="bold" font-size="16" fill="#1E293B">C</text>
+      <text x="165" y="212" font-family="sans-serif" font-weight="bold" font-size="16" fill="#1E293B">D</text>
+    </svg>
+  `,
+
+  // Đề 5 - Câu 12: Hình chữ nhật MNPQ, giao điểm đường chéo O
+  cau12_de5: `
+    <svg viewBox="0 0 320 200" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="200" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="40" y="40" width="240" height="120" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+      <line x1="40" y1="40" x2="280" y2="160" stroke="#9333EA" stroke-width="2"/>
+      <line x1="40" y1="160" x2="280" y2="40" stroke="#9333EA" stroke-width="2"/>
+      <circle cx="160" cy="100" r="4" fill="#DC2626"/>
+      <circle cx="40" cy="40" r="4" fill="#1E293B"/>
+      <circle cx="280" cy="40" r="4" fill="#1E293B"/>
+      <circle cx="280" cy="160" r="4" fill="#1E293B"/>
+      <circle cx="40" cy="160" r="4" fill="#1E293B"/>
+      <text x="25" y="38" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">M</text>
+      <text x="290" y="38" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">N</text>
+      <text x="290" y="175" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">P</text>
+      <text x="25" y="175" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">Q</text>
+      <text x="160" y="90" font-family="sans-serif" font-weight="bold" font-size="15" fill="#DC2626" text-anchor="middle">O</text>
+    </svg>
+  `,
+
+  // Đề 5 - Câu 14: Hình bình hành MNPQ, giao điểm 2 đường chéo I
+  cau14_de5: `
+    <svg viewBox="0 0 320 200" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="200" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <polygon points="50,150 100,50 270,50 220,150" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5"/>
+      <line x1="50" y1="150" x2="270" y2="50" stroke="#475569" stroke-width="1.8"/>
+      <line x1="100" y1="50" x2="220" y2="150" stroke="#475569" stroke-width="1.8"/>
+      <circle cx="160" cy="100" r="4" fill="#DC2626"/>
+      <text x="32" y="160" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">M</text>
+      <text x="95" y="38" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">N</text>
+      <text x="280" y="55" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">P</text>
+      <text x="225" y="165" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">Q</text>
+      <text x="160" y="90" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626" text-anchor="middle">I</text>
+    </svg>
+  `,
+
+  // Đề 5 - Bài 2: Vườn hình vuông cạnh y, trồng hoa bớt 20m và 12m
+  bai5_de5: `
+    <svg viewBox="0 0 320 230" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="230" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="50" y="30" width="170" height="170" fill="#F1F5F9" stroke="#475569" stroke-width="2"/>
+      <rect x="50" y="110" width="100" height="90" fill="#DCFCE7" stroke="#16A34A" stroke-width="2.5"/>
+      <text x="100" y="155" font-family="sans-serif" font-weight="bold" font-size="14" fill="#15803D" text-anchor="middle">Trồng hoa</text>
+      <text x="100" y="175" font-family="sans-serif" font-weight="bold" font-size="13" fill="#15803D" text-anchor="middle">180 m²</text>
+      <line x1="150" y1="205" x2="220" y2="205" stroke="#EA580C" stroke-width="1.8"/>
+      <text x="185" y="222" font-family="sans-serif" font-weight="bold" font-size="13" fill="#EA580C" text-anchor="middle">20 m</text>
+      <line x1="225" y1="30" x2="225" y2="110" stroke="#EA580C" stroke-width="1.8"/>
+      <text x="245" y="75" font-family="sans-serif" font-weight="bold" font-size="13" fill="#EA580C">12 m</text>
+      <line x1="30" y1="30" x2="30" y2="200" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="22" y="120" font-family="sans-serif" font-weight="bold" font-size="15" fill="#2563EB" text-anchor="middle">y</text>
+      <line x1="50" y1="15" x2="220" y2="15" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="135" y="12" font-family="sans-serif" font-weight="bold" font-size="15" fill="#2563EB" text-anchor="middle">y</text>
+    </svg>
+  `,
+
+  // Đề 5 - Bài 3: Tam giác ABC vuông tại B, trung điểm K của AC, KD vuông AB, KE vuông BC
+  bai7_de5: `
+    <svg viewBox="0 0 340 230" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="340" height="230" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Tam giác ABC vuông tại B: B(50,170), A(50,50), C(270,170) -->
+      <polygon points="50,170 50,50 270,170" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="50" y="155" width="15" height="15" fill="none" stroke="#2563EB" stroke-width="1.5"/>
+      <!-- K là trung điểm AC: (160, 110) -->
+      <!-- KD vuông AB tại D: D=(50, 110) -->
+      <line x1="160" y1="110" x2="50" y2="110" stroke="#16A34A" stroke-width="2"/>
+      <!-- KE vuông BC tại E: E=(160, 170) -->
+      <line x1="160" y1="110" x2="160" y2="170" stroke="#16A34A" stroke-width="2"/>
+      <!-- BK và DE nối nét đứt -->
+      <line x1="50" y1="170" x2="160" y2="110" stroke="#DC2626" stroke-width="2"/>
+      <line x1="50" y1="110" x2="160" y2="170" stroke="#9333EA" stroke-width="2" stroke-dasharray="4,4"/>
+      <circle cx="50" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="50" cy="50" r="4" fill="#1E293B"/>
+      <circle cx="270" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="160" cy="110" r="4" fill="#DC2626"/>
+      <circle cx="50" cy="110" r="4" fill="#16A34A"/>
+      <circle cx="160" cy="170" r="4" fill="#16A34A"/>
+      <text x="32" y="185" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">B</text>
+      <text x="35" y="45" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">A</text>
+      <text x="280" y="175" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">C</text>
+      <text x="170" y="105" font-family="sans-serif" font-weight="bold" font-size="15" fill="#DC2626">K</text>
+      <text x="32" y="115" font-family="sans-serif" font-weight="bold" font-size="15" fill="#16A34A">D</text>
+      <text x="155" y="190" font-family="sans-serif" font-weight="bold" font-size="15" fill="#16A34A">E</text>
+    </svg>
+  `,
+
+  // ==================== HÌNH VẼ CHO ĐỀ SỐ 06 ====================
+  // Đề 6 - Câu 9: Tứ giác MNPQ có góc N = góc Q
+  cau9_de6: `
+    <svg viewBox="0 0 320 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Tứ giác MNPQ: Q(40,180), M(50,85), N(280,35), P(250,140) -->
+      <polygon points="40,180 50,85 280,35 250,140" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M 43,155 A 25 25 0 0 1 65,177" fill="none" stroke="#EA580C" stroke-width="1.8"/>
+      <path d="M 45,150 A 30 30 0 0 1 70,175" fill="none" stroke="#EA580C" stroke-width="1.8"/>
+      <path d="M 255,42 A 25 25 0 0 1 272,60" fill="none" stroke="#EA580C" stroke-width="1.8"/>
+      <path d="M 250,45 A 30 30 0 0 1 270,65" fill="none" stroke="#EA580C" stroke-width="1.8"/>
+      <circle cx="50" cy="85" r="4" fill="#1E293B"/>
+      <circle cx="280" cy="35" r="4" fill="#1E293B"/>
+      <circle cx="250" cy="140" r="4" fill="#1E293B"/>
+      <circle cx="40" cy="180" r="4" fill="#1E293B"/>
+      <text x="32" y="80" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">M</text>
+      <text x="290" y="35" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">N</text>
+      <text x="260" y="150" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">P</text>
+      <text x="25" y="195" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">Q</text>
+    </svg>
+  `,
+
+  // Đề 6 - Câu 11: Hình thoi EFGH có EG vuông FH tại O
+  cau11_de6: `
+    <svg viewBox="0 0 320 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="320" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- E(160,25), F(280,110), G(160,195), H(40,110) -->
+      <polygon points="160,25 280,110 160,195 40,110" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+      <line x1="160" y1="25" x2="160" y2="195" stroke="#DC2626" stroke-width="2"/>
+      <line x1="40" y1="110" x2="280" y2="110" stroke="#DC2626" stroke-width="2"/>
+      <rect x="160" y="98" width="12" height="12" fill="none" stroke="#DC2626" stroke-width="1.5"/>
+      <circle cx="160" cy="110" r="4" fill="#DC2626"/>
+      <text x="155" y="20" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">E</text>
+      <text x="290" y="115" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">F</text>
+      <text x="155" y="210" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">G</text>
+      <text x="25" y="115" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">H</text>
+      <text x="175" y="125" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">O</text>
+    </svg>
+  `,
+
+  // Đề 6 - Câu 14: Tam giác DEF vuông tại D, trung tuyến DI, IM vuông DE, IN vuông DF
+  cau14_de6: `
+    <svg viewBox="0 0 340 220" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="340" height="220" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- D(40,170), E(40,40), F(280,170) -->
+      <polygon points="40,170 40,40 280,170" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="40" y="156" width="14" height="14" fill="none" stroke="#2563EB" stroke-width="1.5"/>
+      <!-- Trung điểm I của EF: (160, 105) -->
+      <line x1="40" y1="170" x2="160" y2="105" stroke="#DC2626" stroke-width="2"/>
+      <line x1="160" y1="105" x2="40" y2="105" stroke="#16A34A" stroke-width="2"/>
+      <line x1="160" y1="105" x2="160" y2="170" stroke="#16A34A" stroke-width="2"/>
+      <circle cx="40" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="40" cy="40" r="4" fill="#1E293B"/>
+      <circle cx="280" cy="170" r="4" fill="#1E293B"/>
+      <circle cx="160" cy="105" r="4" fill="#DC2626"/>
+      <circle cx="40" cy="105" r="4" fill="#16A34A"/>
+      <circle cx="160" cy="170" r="4" fill="#16A34A"/>
+      <text x="25" y="185" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">D</text>
+      <text x="25" y="38" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">E</text>
+      <text x="290" y="175" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">F</text>
+      <text x="170" y="100" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">I</text>
+      <text x="20" y="110" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">M</text>
+      <text x="155" y="190" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">N</text>
+    </svg>
+  `,
+
+  // Đề 6 - Bài 3: Tam giác MNP vuông tại M, trung tuyến MK, KH vuông MN, KI vuông MP, điểm đối xứng Q
+  bai8_de6: `
+    <svg viewBox="0 0 340 240" class="w-full max-w-sm mx-auto my-3" xmlns="http://www.w3.org/2000/svg">
+      <rect width="340" height="240" fill="#F8FAFC" rx="10" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- M(120,180), N(120,60), P(290,180) -->
+      <polygon points="120,180 120,60 290,180" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+      <rect x="120" y="166" width="14" height="14" fill="none" stroke="#2563EB" stroke-width="1.5"/>
+      <!-- K là trung điểm NP: (205, 120) -->
+      <!-- KH vuông MN tại H: H=(120, 120) -->
+      <line x1="205" y1="120" x2="120" y2="120" stroke="#16A34A" stroke-width="2"/>
+      <!-- KI vuông MP tại I: I=(205, 180) -->
+      <line x1="205" y1="120" x2="205" y2="180" stroke="#16A34A" stroke-width="2"/>
+      <line x1="120" y1="180" x2="205" y2="120" stroke="#DC2626" stroke-width="2"/>
+      <!-- Điểm Q đối xứng K qua H: Q=(35, 120) -->
+      <line x1="120" y1="120" x2="35" y2="120" stroke="#9333EA" stroke-width="2" stroke-dasharray="4,4"/>
+      <!-- Hình thoi MKNQ: nối Q-N và Q-M -->
+      <line x1="35" y1="120" x2="120" y2="60" stroke="#9333EA" stroke-width="2"/>
+      <line x1="35" y1="120" x2="120" y2="180" stroke="#9333EA" stroke-width="2"/>
+      <circle cx="120" cy="180" r="4" fill="#1E293B"/>
+      <circle cx="120" cy="60" r="4" fill="#1E293B"/>
+      <circle cx="290" cy="180" r="4" fill="#1E293B"/>
+      <circle cx="205" cy="120" r="4" fill="#DC2626"/>
+      <circle cx="120" cy="120" r="4" fill="#16A34A"/>
+      <circle cx="205" cy="180" r="4" fill="#16A34A"/>
+      <circle cx="35" cy="120" r="4" fill="#9333EA"/>
+      <text x="105" y="195" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">M</text>
+      <text x="115" y="50" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">N</text>
+      <text x="295" y="185" font-family="sans-serif" font-weight="bold" font-size="15" fill="#1E293B">P</text>
+      <text x="215" y="115" font-family="sans-serif" font-weight="bold" font-size="14" fill="#DC2626">K</text>
+      <text x="125" y="115" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">H</text>
+      <text x="205" y="198" font-family="sans-serif" font-weight="bold" font-size="14" fill="#16A34A">I</text>
+      <text x="18" y="125" font-family="sans-serif" font-weight="bold" font-size="14" fill="#9333EA">Q</text>
+    </svg>
   `
 };
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = SVG_DIAGRAMS;
+}
